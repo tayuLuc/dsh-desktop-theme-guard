@@ -1,0 +1,12 @@
+<!doctype html><html><body><script>
+// Runs inside an EMBEDDED document whose own origin is http://127.0.0.1:8777.
+// The route it calls serves NO Access-Control-Allow-Origin header.
+(async () => {
+  const out = { origin: location.origin };
+  try {
+    const r = await fetch('/os.json', { cache: 'no-store', credentials: 'same-origin' });
+    out.status = r.status; out.body = await r.json(); out.acao = r.headers.get('access-control-allow-origin');
+  } catch (e) { out.error = String(e && e.name) + ': ' + String(e && e.message); }
+  parent.postMessage({ report: out }, '*');
+})();
+</script></body></html>

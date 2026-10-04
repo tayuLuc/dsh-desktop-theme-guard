@@ -1,0 +1,10 @@
+# Bundle patch for dsh-desktop-theme-guard: inserts its plugin row into
+# the profile roster. Applied as a profile bundle layer when the package is
+# listed in `dsh.profile.bundles`.
+#
+# Config keys are optional; the defaults below are what shipping enabled does.
+# To run the probe without touching settings.yaml, add:
+#   config: { materializePreference: false }
+- insert:
+    - id: dsh-desktop-theme-guard
+      name: dsh-desktop-theme-guard

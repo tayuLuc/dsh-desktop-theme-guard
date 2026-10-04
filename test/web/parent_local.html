@@ -1,0 +1,8 @@
+<!doctype html><html><body>
+<iframe id="f" src="http://127.0.0.1:8777/cors_child.html"></iframe>
+<script>
+window.addEventListener('message', (e) => {
+  const r = e.data && e.data.report;
+  if (r) window.webkit.messageHandlers.probe.postMessage(JSON.stringify({ parentOrigin: location.protocol, report: r }));
+});
+</script></body></html>

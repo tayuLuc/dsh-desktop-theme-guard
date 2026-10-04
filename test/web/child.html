@@ -1,0 +1,12 @@
+<!doctype html><html><head><meta charset="utf-8"><title>child</title></head><body>
+<pre id="out">pending</pre>
+<script>
+const mq = matchMedia('(prefers-color-scheme: dark)');
+function report(tag){
+  const payload = {tag, matches: mq.matches, media: mq.media, name: 'child'};
+  try { parent.postMessage({__probe: payload}, '*'); } catch(e){}
+  if (window.top === window.self) document.getElementById('out').textContent = JSON.stringify(payload);
+}
+report('init');
+mq.addEventListener('change', () => report('change'));
+</script></body></html>

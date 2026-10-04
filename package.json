@@ -1,0 +1,32 @@
+{
+  "name": "dsh-desktop-theme-guard",
+  "version": "0.1.0",
+  "description": "DSH client+host patch: makes the desktop app's Appearance=System option follow the real OS theme. DeepSeek Harness Desktop pins the native window appearance from ui-theme.preference in settings.yaml, which overrides prefers-color-scheme inside the embedded WKWebView; this plugin feeds the theme service the OS appearance probed out of band and keeps the preference explicitly written so the shell stops pinning.",
+  "license": "MIT",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/**/*.js",
+    "cordis.patch.yml"
+  ],
+  "dsh": {
+    "client": {
+      "inject": [
+        "theme"
+      ],
+      "platform": "web"
+    },
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

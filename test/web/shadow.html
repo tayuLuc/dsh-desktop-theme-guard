@@ -1,0 +1,17 @@
+<!doctype html><html><head><meta charset="utf-8"></head><body><script>
+const out = [];
+const mq = matchMedia('(prefers-color-scheme: dark)');
+let fired = 0;
+mq.addEventListener('change', () => { fired += 1; out.push('change-fired:' + mq.matches); });
+const native = mq.matches;
+let shadowed = null, dispatched = null, restored = null;
+try {
+  Object.defineProperty(mq, 'matches', { configurable: true, enumerable: true, get: () => !native });
+  shadowed = mq.matches;
+  try { mq.dispatchEvent(new Event('change')); dispatched = fired; } catch (e) { dispatched = 'ERR ' + e.message; }
+  delete mq.matches;
+  restored = mq.matches;
+} catch (e) { shadowed = 'ERR ' + e.message; }
+out.push('native:' + native, 'shadowed:' + shadowed, 'listenerInvocations:' + dispatched, 'restored:' + restored, 'isMQLObjet:' + (mq instanceof MediaQueryList));
+window.webkit.messageHandlers.probe.postMessage({ tag: 'shadow', matches: out.join(' | ') });
+</script></body></html>
